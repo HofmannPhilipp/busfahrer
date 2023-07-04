@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 
 const DeckContext = createContext();
 const deck = new Dealer(standardDeck).shuffle();
+
 function DeckProvider({ children }) {
   function drawCardFromDeck() {
     return deck.draw()[0];
@@ -16,7 +17,7 @@ function DeckProvider({ children }) {
     };
   }
   function getCardId(rank, suit) {
-    return `cards/${suit}_${rank}`.toLocaleLowerCase();
+    return `${suit}_${rank}`.toLocaleLowerCase();
   }
   function createPyramide() {
     deck.reset().shuffle();
@@ -33,7 +34,7 @@ function DeckProvider({ children }) {
     ];
   }
   function resetDeck() {
-    deck.reset().shuffle();
+    deck.reset();
   }
 
   return (

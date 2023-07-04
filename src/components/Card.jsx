@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactCardFlip from "react-card-flip";
-function Card({ suit, rank, isFlipped, enableOnClick }) {
+function Card({ id, isFlipped, enableOnClick }) {
   const [flip, setFlip] = useState(isFlipped);
 
   useEffect(() => {
@@ -19,11 +19,13 @@ function Card({ suit, rank, isFlipped, enableOnClick }) {
         alt=""
         className="h-full"
       />
-      <img
-        onClick={handleFlip}
-        src={`cards/${suit}_${rank}`.toLocaleLowerCase().concat(".png")}
-        className="h-full"
-      />
+      {id && (
+        <img
+          onClick={handleFlip}
+          src={`cards/${id}`.concat(".png")}
+          className="h-full"
+        />
+      )}
     </ReactCardFlip>
   );
 }

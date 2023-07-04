@@ -10,9 +10,9 @@ import {
 function PlayerTurn({ playerName, ui }) {
   const { nextPlayerTurn } = useGameState();
   const dispatch = useGameStateDispatch();
-  const [card, setCard] = useState({});
+  const [card, setCard] = useState();
   const [flipCard, setflipCard] = useState(false);
-  const { drawCardFromDeck } = useDeck();
+  const { drawCardFromDeck, getCardId } = useDeck();
   const [showNext, setShowNext] = useState(false);
 
   useEffect(() => {
@@ -47,18 +47,21 @@ function PlayerTurn({ playerName, ui }) {
   }
 
   return (
-    <div>
+    <div className="text-white">
       <div className="text-lg font-bold text-center">
         <p>{playerName}</p>
         <p>{ui.info}</p>
       </div>
 
       <div className="h-[148px] my-5 flex justify-center">
-        <Card rank={card.rank} suit={card.suit} isFlipped={flipCard} />
+        {card && (
+          <Card id={getCardId(card.rank, card.suit)} isFlipped={flipCard} />
+        )}
       </div>
       <div className={`flex justify-center gap-2 font-semibold`}>
         {ui.buttons.map(({ text, value, style }) => (
           <button
+            key={value}
             onClick={handleClick}
             className={`w-[80px] py-1 rounded-lg ${style}`}
           >

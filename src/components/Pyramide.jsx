@@ -37,8 +37,7 @@ function Pyramide() {
                   className="h-[100px]"
                 >
                   <Card
-                    rank={card.rank}
-                    suit={card.suit}
+                    id={getCardId(card.rank, card.suit)}
                     isFlipped={false}
                     enableOnClick
                   />

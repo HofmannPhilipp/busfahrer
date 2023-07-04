@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useGameState } from "../context/GameStateProvider";
 import PlayersInfo from "./PlayersInfo";
 import PlayerTurn from "./PlayerTurn";
 import { playStages } from "../utils/helper";
+import { useDeck } from "../context/DeckProvider";
 function FirstRound() {
   const { playersState, playersTurnIndex, gameRound } = useGameState();
 
   return (
-    <div className="py-10 text-white">
+    <div className="py-10 ">
       {playersState.players.map(
         (player, index) =>
           index === playersTurnIndex && (

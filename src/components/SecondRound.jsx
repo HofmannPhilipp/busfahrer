@@ -7,33 +7,33 @@ import { useGameState } from "../context/GameStateProvider";
 
 function SecondRound() {
   const [cards, setCards] = useState();
-  const { drawCardsForDrinkAndHandOut } = useDeck();
+  const { drawCardsForDrinkAndHandOut, getCardId } = useDeck();
   const { setThirdRound } = useGameState();
   useEffect(() => {
     setCards(drawCardsForDrinkAndHandOut());
   }, []);
 
   return (
-    <div className="py-10">
+    <div className="py-10 text-white">
       {cards && (
         <div className="space-y-2">
+          <p>Trinken</p>
           <div className="flex space-x-1">
             {cards.drinkCards.map((card, idx) => (
               <Card
                 key={idx}
-                rank={card.rank}
-                suit={card.suit}
+                id={getCardId(card.rank, card.suit)}
                 isFlipped={false}
                 enableOnClick
               />
             ))}
           </div>
+          <p>Verteilen</p>
           <div className="flex space-x-1">
             {cards.handOutCards.map((card, idx) => (
               <Card
                 key={idx}
-                rank={card.rank}
-                suit={card.suit}
+                id={getCardId(card.rank, card.suit)}
                 isFlipped={false}
                 enableOnClick
               />
