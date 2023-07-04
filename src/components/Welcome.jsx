@@ -37,7 +37,7 @@ function Welcome() {
     <div className="flex flex-col py-10 space-y-10 text-center">
       <h1 className="text-2xl text-white">Busfahrer</h1>
       <img src="/busdriver.png" alt="logo" className="" />
-      <div className="flex rounded-full">
+      <div className="flex justify-center rounded-full">
         <input
           type="text"
           name="name"
