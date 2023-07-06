@@ -16,11 +16,7 @@ function ThirdRound() {
     <div className="text-white">
       {card && (
         <div className="h-[148px] my-5 flex justify-center">
-          <Card
-            id={getCardId(card.rank, card.suit)}
-            isFlipped={false}
-            enableOnClick
-          />
+          <Card id={getCardId(card.rank, card.suit)} isFlipped={true} />
         </div>
       )}
       <button

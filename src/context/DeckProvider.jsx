@@ -20,18 +20,20 @@ function DeckProvider({ children }) {
     return `${suit}_${rank}`.toLocaleLowerCase();
   }
   function createPyramide() {
-    deck.reset().shuffle();
-    return [
-      [drawCardFromDeck()],
-      [drawCardFromDeck(), drawCardFromDeck()],
-      [drawCardFromDeck(), drawCardFromDeck(), drawCardFromDeck()],
+    const pyramideDeck = new Dealer(standardDeck).shuffle();
+    const pyramide = [
+      [pyramideDeck.draw()[0]],
+      [pyramideDeck.draw()[0], pyramideDeck.draw()[0]],
+      [pyramideDeck.draw()[0], pyramideDeck.draw()[0], pyramideDeck.draw()[0]],
+
       [
-        drawCardFromDeck(),
-        drawCardFromDeck(),
-        drawCardFromDeck(),
-        drawCardFromDeck(),
+        pyramideDeck.draw()[0],
+        pyramideDeck.draw()[0],
+        pyramideDeck.draw()[0],
+        pyramideDeck.draw()[0],
       ],
     ];
+    return pyramide;
   }
   function resetDeck() {
     deck.reset();

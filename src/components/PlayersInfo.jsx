@@ -3,8 +3,10 @@ import { CiBeerMugFull } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import Card from "./Card";
 import { useGameState } from "../context/GameStateProvider";
+import { useDeck } from "../context/DeckProvider";
 function PlayersInfo() {
   const { playersState } = useGameState();
+  const { getCardId } = useDeck();
 
   return (
     <div className="text-white">
@@ -26,7 +28,10 @@ function PlayersInfo() {
               <div className="flex gap-2">
                 {player.cards.map((card, idx) => (
                   <div className="h-[48px]" key={idx}>
-                    <Card rank={card.rank} suit={card.suit} isFlipped={true} />
+                    <Card
+                      id={getCardId(card.rank, card.suit)}
+                      isFlipped={true}
+                    />
                   </div>
                 ))}
               </div>
