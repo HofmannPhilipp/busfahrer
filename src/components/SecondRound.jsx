@@ -23,14 +23,13 @@ function SecondRound() {
         (card) => card.rank === rank
       ).length;
       if (matchedCards > 0) {
-        console.log(player.name);
         if (type === "drink") {
           toast.error(
             `${player.name} ${value * matchedCards} ${
               value > 1 ? `schlücke` : `schluck`
             } trinken.`,
             {
-              position: "bottom-center",
+              position: "top-center",
               autoClose: 10000,
               hideProgressBar: false,
               closeOnClick: true,
@@ -47,7 +46,7 @@ function SecondRound() {
               value > 1 ? `schlücke` : `schluck`
             } verteilen.`,
             {
-              position: "bottom-center",
+              position: "top-center",
               autoClose: 10000,
               hideProgressBar: false,
               closeOnClick: true,

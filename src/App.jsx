@@ -9,7 +9,7 @@ import { useGameState } from "./context/GameStateProvider";
 function App() {
   const { gameState } = useGameState();
   return (
-    <main className="h-screen max-w-[460px] mx-auto ">
+    <main className="h-screen max-w-[420px] mx-auto ">
       {gameState === "welcome" && <Welcome />}
       {gameState === "first-round" && (
         <Layout>

@@ -6,6 +6,9 @@ import {
   useGameState,
   useGameStateDispatch,
 } from "../context/GameStateProvider";
+import { rigthOrWrong } from "../utils/helper";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PlayerTurn({ playerName, ui, cards }) {
   const { nextPlayerTurn } = useGameState();
@@ -21,12 +24,36 @@ function PlayerTurn({ playerName, ui, cards }) {
       type: ACTIONS.SET_ACTIVE_PLAYER,
       payload: { name: playerName, active: true },
     });
+    cards.sort((a, b) => a.rank - b.rank);
   }, []);
 
-  function handleClick() {
+  function handleClick(type, value, cards, card) {
     if (flipCard) return;
-    setflipCard(true);
+    if (rigthOrWrong(cards, card, type, value))
+      toast.success(`${playerName} richtig.`, {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    else {
+      toast.error(`${playerName} falsch.`, {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
 
+    setflipCard(true);
     setShowNext(true);
   }
 
@@ -52,22 +79,13 @@ function PlayerTurn({ playerName, ui, cards }) {
       <div className="text-lg font-bold text-center">
         <div className="flex flex-col items-center ">
           <p>{playerName}</p>
-          {/* <div className="flex gap-2">
-            {cards.map((card) => (
-              <div className="h-[100px]">
-                <Card id={getCardId(card.rank, card.suit)} isFlipped />
-              </div>
-            ))}
-          </div> */}
         </div>
         <p>{ui.info}</p>
       </div>
 
       <div className="h-[148px] my-5 flex justify-center gap-2">
         {cards.map((card) => (
-          <div className="">
-            <Card src={card.src} isFlipped />
-          </div>
+          <Card key={card.src} src={card.src} isFlipped />
         ))}
         {card && <Card src={card.src} isFlipped={flipCard} />}
       </div>
@@ -84,7 +102,7 @@ function PlayerTurn({ playerName, ui, cards }) {
           {ui.buttons.map(({ text, value, style }) => (
             <button
               key={value}
-              onClick={handleClick}
+              onClick={() => handleClick(ui.type, value, cards, card)}
               className={`w-[80px] py-1 rounded-lg ${style}`}
             >
               {text}
@@ -92,6 +110,18 @@ function PlayerTurn({ playerName, ui, cards }) {
           ))}
         </div>
       )}
+      <ToastContainer
+        position="bottom-center"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="colored"
+      />
     </div>
   );
 }

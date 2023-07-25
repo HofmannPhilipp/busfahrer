@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useGameState } from "../context/GameStateProvider";
-import PlayersInfo from "./PlayersInfo";
 import PlayerTurn from "./PlayerTurn";
 import { playStages } from "../utils/helper";
-import { useDeck } from "../context/DeckProvider";
 function FirstRound() {
   const { playersState, playersTurnIndex, gameRound } = useGameState();
 

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import {
   ACTIONS,
   initialState,
@@ -11,6 +17,7 @@ function GameStateProvider({ children }) {
   const [playersState, dispatch] = useReducer(playersReducer, initialState);
   const [gameState, setGameState] = useState("welcome");
   const [gameRound, setGameRound] = useState(0);
+
   function nextPlayerTurn() {
     if (playersTurnIndex < playersState.players.length - 1) {
       playersTurnIndex++;
