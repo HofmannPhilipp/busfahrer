@@ -19,12 +19,15 @@ function SecondRound() {
 
   function handleClick(rank, type, value) {
     playersState.players.map((player) => {
-      if (player.cards.filter((card) => card.rank === rank).length > 0) {
+      const matchedCards = player.cards.filter(
+        (card) => card.rank === rank
+      ).length;
+      if (matchedCards > 0) {
         console.log(player.name);
         if (type === "drink") {
           toast.error(
-            `${player.name} ${value + 1} ${
-              value + 1 > 1 ? `schlücke` : `schluck`
+            `${player.name} ${value * matchedCards} ${
+              value > 1 ? `schlücke` : `schluck`
             } trinken.`,
             {
               position: "bottom-center",
@@ -40,8 +43,8 @@ function SecondRound() {
         }
         if (type === "handOut") {
           toast.success(
-            `${player.name} ${value + 1} ${
-              value + 1 > 1 ? `schlücke` : `schluck`
+            `${player.name} ${value * matchedCards} ${
+              value > 1 ? `schlücke` : `schluck`
             } verteilen.`,
             {
               position: "bottom-center",
@@ -68,7 +71,7 @@ function SecondRound() {
             {cards.drinkCards.map((card, idx) => (
               <div
                 key={idx}
-                onClick={() => handleClick(card.rank, "drink", idx)}
+                onClick={() => handleClick(card.rank, "drink", idx + 1)}
               >
                 <Card
                   key={idx}
@@ -84,7 +87,7 @@ function SecondRound() {
             {cards.handOutCards.map((card, idx) => (
               <div
                 key={idx}
-                onClick={() => handleClick(card.rank, "handOut", idx)}
+                onClick={() => handleClick(card.rank, "handOut", idx + 1)}
               >
                 <Card
                   key={idx}
