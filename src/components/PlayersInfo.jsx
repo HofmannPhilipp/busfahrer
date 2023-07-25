@@ -9,13 +9,13 @@ function PlayersInfo() {
   const { getCardId } = useDeck();
 
   return (
-    <div className="text-white">
-      <div className="flex justify-center bg-purple-500">
-        <CiBeerMugFull className="text-3xl" />
+    <div className="">
+      <div className="flex justify-center bg-gradient-to-r from-indigo-700 via-purple-500 to-indigo-700">
+        <CiBeerMugFull className="text-3xl text-white" />
       </div>
-      <div className="px-2 bg-zinc-900 divide-y">
+      <div className="px-2 divide-y bg-zinc-900">
         {playersState.players.map((player) => (
-          <div key={player.name} className="flex items-center h-[60px]">
+          <div key={player.name} className="flex items-center h-[70px]">
             <div className="flex items-center gap-2 w-[100px]">
               <FaPlayCircle
                 className={`${
@@ -25,13 +25,10 @@ function PlayersInfo() {
               <span className="text-white">{player.name}</span>
             </div>
             {player.cards.length > 0 && (
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 {player.cards.map((card, idx) => (
-                  <div className="h-[48px]" key={idx}>
-                    <Card
-                      id={getCardId(card.rank, card.suit)}
-                      isFlipped={true}
-                    />
+                  <div className="h-[64px]" key={idx}>
+                    <Card src={card.src} isFlipped={true} />
                   </div>
                 ))}
               </div>

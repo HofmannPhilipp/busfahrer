@@ -16,6 +16,7 @@ function FirstRound() {
               key={index}
               playerName={player.name}
               ui={playStages[gameRound]}
+              cards={player.cards}
             />
           )
       )}

@@ -8,7 +8,7 @@ import { useGameState } from "../context/GameStateProvider";
 function ThirdRound() {
   const [card, setCard] = useState();
   const { setPyramide } = useGameState();
-  const { drawCardFromDeck, getCardId } = useDeck();
+  const { drawCardFromDeck } = useDeck();
   useEffect(() => {
     setCard(drawCardFromDeck());
   }, []);
@@ -16,7 +16,7 @@ function ThirdRound() {
     <div className="text-white">
       {card && (
         <div className="h-[148px] my-5 flex justify-center">
-          <Card id={getCardId(card.rank, card.suit)} isFlipped={true} />
+          <Card src={card.src} isFlipped={true} />
         </div>
       )}
       <button

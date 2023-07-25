@@ -1,8 +1,8 @@
-import { Dealer, standardDeck } from "card-dealer";
 import React, { createContext, useContext, useState } from "react";
+import { Deck } from "../utils/standardDeck";
 
 const DeckContext = createContext();
-const deck = new Dealer(standardDeck).shuffle();
+const deck = new Deck(32).shuffle();
 
 function DeckProvider({ children }) {
   function drawCardFromDeck() {
@@ -12,27 +12,35 @@ function DeckProvider({ children }) {
   function drawCardsForDrinkAndHandOut() {
     deck.shuffle();
     return {
-      drinkCards: deck._drawPile.slice(0, 4),
-      handOutCards: deck._drawPile.slice(4, 8),
+      drinkCards: deck.draw(4),
+      handOutCards: deck.draw(4),
     };
   }
-  function getCardId(rank, suit) {
-    return `${suit}_${rank}`.toLocaleLowerCase();
-  }
+  // function getCardId(rank, suit) {
+  //   return `${suit}_${rank}`.toLocaleLowerCase();
+  // }
   function createPyramide() {
-    const pyramideDeck = new Dealer(standardDeck).shuffle();
-    const pyramide = [
-      [pyramideDeck.draw()[0]],
-      [pyramideDeck.draw()[0], pyramideDeck.draw()[0]],
-      [pyramideDeck.draw()[0], pyramideDeck.draw()[0], pyramideDeck.draw()[0]],
+    const pyramideDeck = new Deck(32).shuffle();
+    const pyramide = [];
+    for (let i = 1; i <= 4; i++) {
+      let level = [];
+      for (let j = 1; j <= i; j++) {
+        level.push(pyramideDeck.draw()[0]);
+      }
+      pyramide.push(level);
+    }
+    // const pyramide = [
+    //   [pyramideDeck.draw()[0]],
+    //   [pyramideDeck.draw()[0], pyramideDeck.draw()[0]],
+    //   [pyramideDeck.draw()[0], pyramideDeck.draw()[0], pyramideDeck.draw()[0]],
 
-      [
-        pyramideDeck.draw()[0],
-        pyramideDeck.draw()[0],
-        pyramideDeck.draw()[0],
-        pyramideDeck.draw()[0],
-      ],
-    ];
+    //   [
+    //     pyramideDeck.draw()[0],
+    //     pyramideDeck.draw()[0],
+    //     pyramideDeck.draw()[0],
+    //     pyramideDeck.draw()[0],
+    //   ],
+    // ];
     return pyramide;
   }
   function resetDeck() {
@@ -46,7 +54,6 @@ function DeckProvider({ children }) {
         deck,
         drawCardsForDrinkAndHandOut,
         createPyramide,
-        getCardId,
         resetDeck,
       }}
     >

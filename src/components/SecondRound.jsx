@@ -4,14 +4,60 @@ import { useEffect } from "react";
 import { useDeck } from "../context/DeckProvider";
 import Card from "./Card";
 import { useGameState } from "../context/GameStateProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SecondRound() {
   const [cards, setCards] = useState();
-  const { drawCardsForDrinkAndHandOut, getCardId } = useDeck();
+  const { drawCardsForDrinkAndHandOut } = useDeck();
   const { setThirdRound } = useGameState();
+  const { playersState } = useGameState();
+
   useEffect(() => {
     setCards(drawCardsForDrinkAndHandOut());
   }, []);
+
+  function handleClick(rank, type, value) {
+    playersState.players.map((player) => {
+      if (player.cards.filter((card) => card.rank === rank).length > 0) {
+        console.log(player.name);
+        if (type === "drink") {
+          toast.error(
+            `${player.name} ${value + 1} ${
+              value + 1 > 1 ? `schlücke` : `schluck`
+            } trinken.`,
+            {
+              position: "bottom-center",
+              autoClose: 10000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            }
+          );
+        }
+        if (type === "handOut") {
+          toast.success(
+            `${player.name} ${value + 1} ${
+              value + 1 > 1 ? `schlücke` : `schluck`
+            } verteilen.`,
+            {
+              position: "bottom-center",
+              autoClose: 10000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            }
+          );
+        }
+      }
+    });
+  }
 
   return (
     <div className="py-10 text-white">
@@ -20,23 +66,33 @@ function SecondRound() {
           <p>Trinken</p>
           <div className="flex space-x-1">
             {cards.drinkCards.map((card, idx) => (
-              <Card
+              <div
                 key={idx}
-                id={getCardId(card.rank, card.suit)}
-                isFlipped={false}
-                enableOnClick
-              />
+                onClick={() => handleClick(card.rank, "drink", idx)}
+              >
+                <Card
+                  key={idx}
+                  src={card.src}
+                  isFlipped={false}
+                  enableOnClick
+                />
+              </div>
             ))}
           </div>
           <p>Verteilen</p>
           <div className="flex space-x-1">
             {cards.handOutCards.map((card, idx) => (
-              <Card
+              <div
                 key={idx}
-                id={getCardId(card.rank, card.suit)}
-                isFlipped={false}
-                enableOnClick
-              />
+                onClick={() => handleClick(card.rank, "handOut", idx)}
+              >
+                <Card
+                  key={idx}
+                  src={card.src}
+                  isFlipped={false}
+                  enableOnClick
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -47,6 +103,18 @@ function SecondRound() {
       >
         Weiter
       </button>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="colored"
+      />
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
 import { ACTIONS } from "../reducer/playersReducer";
 
 function Pyramide() {
-  const { createPyramide, getCardId, resetDeck } = useDeck();
+  const { createPyramide, resetDeck } = useDeck();
   const { resetGameState } = useGameState();
   const dispatch = useGameStateDispatch();
   const [pyramide, setPyramide] = useState();
@@ -26,21 +26,14 @@ function Pyramide() {
   }
 
   return (
-    <div className=" py-5">
+    <div className="py-5 ">
       <div className="space-y-1">
         {pyramide &&
           pyramide.map((level, idx) => (
             <div key={idx} className="flex justify-center gap-1">
               {level.map((card) => (
-                <div
-                  key={getCardId(card.rank, card.suit)}
-                  className="h-[100px]"
-                >
-                  <Card
-                    id={getCardId(card.rank, card.suit)}
-                    isFlipped={false}
-                    enableOnClick
-                  />
+                <div key={card.src} className="h-[100px]">
+                  <Card src={card.src} isFlipped={false} enableOnClick />
                 </div>
               ))}
             </div>
