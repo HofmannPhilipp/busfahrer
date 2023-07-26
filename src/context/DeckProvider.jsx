@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
-import { Deck } from "../utils/standardDeck";
+import { Deck } from "../utils/Deck";
+import { ACTIONS } from "../utils/firstRoundPlayStages";
 
 const DeckContext = createContext();
 const deck = new Deck(32).shuffle();
@@ -8,17 +9,43 @@ function DeckProvider({ children }) {
   function drawCardFromDeck() {
     return deck.draw()[0];
   }
+  function firstRoundPlay(cards, card, type, value) {
+    switch (type) {
+      case ACTIONS.RED_OR_BLACK:
+        if (value === "red") {
+          return card.suit === "diamond" || card.suit === "heart";
+        }
+        if (value === "black") {
+          return card.suit === "spade" || card.suit === "club";
+        }
+      case ACTIONS.UP_OR_DOWN:
+        if (value === "equal") return cards[0].rank === card.rank;
+        if (value === "up") return cards[0].rank < card.rank;
+        if (value === "down") return cards[0].rank > card.rank;
+
+      case ACTIONS.INSIDE_OR_OUTSIDE:
+        if (value === "equal")
+          return cards[0].rank === card.rank || cards[1].rank === card.rank;
+        if (value === "inside")
+          return cards[0].rank < card.rank && cards[1].rank > card.rank;
+        if (value === "outside")
+          return (
+            (cards[0].rank > card.rank && cards[1].rank > card.rank) ||
+            (cards[0].rank < card.rank && cards[1].rank < card.rank)
+          );
+      case ACTIONS.EQUAL_OR_DIFFRENT:
+        return card.suit === value;
+    }
+  }
 
   function drawCardsForDrinkAndHandOut() {
     deck.shuffle();
     return {
-      drinkCards: deck.draw(4),
-      handOutCards: deck.draw(4),
+      drinkCards: deck.getCards(0, 4),
+      handOutCards: deck.getCards(4, 8),
     };
   }
-  // function getCardId(rank, suit) {
-  //   return `${suit}_${rank}`.toLocaleLowerCase();
-  // }
+
   function createPyramide() {
     const pyramideDeck = new Deck(32).shuffle();
     const pyramide = [];
@@ -29,18 +56,6 @@ function DeckProvider({ children }) {
       }
       pyramide.push(level);
     }
-    // const pyramide = [
-    //   [pyramideDeck.draw()[0]],
-    //   [pyramideDeck.draw()[0], pyramideDeck.draw()[0]],
-    //   [pyramideDeck.draw()[0], pyramideDeck.draw()[0], pyramideDeck.draw()[0]],
-
-    //   [
-    //     pyramideDeck.draw()[0],
-    //     pyramideDeck.draw()[0],
-    //     pyramideDeck.draw()[0],
-    //     pyramideDeck.draw()[0],
-    //   ],
-    // ];
     return pyramide;
   }
   function resetDeck() {
@@ -52,6 +67,7 @@ function DeckProvider({ children }) {
       value={{
         drawCardFromDeck,
         deck,
+        firstRoundPlay,
         drawCardsForDrinkAndHandOut,
         createPyramide,
         resetDeck,

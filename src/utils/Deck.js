@@ -91,4 +91,8 @@ export class Deck {
     if (this.deckSize == 32) this.cards = standardDeck.slice(16);
     else this.cards = standardDeck;
   }
+  getCards(start, end) {
+    if (this.cards.length <= 0) return;
+    return this.cards.slice(start, end);
+  }
 }

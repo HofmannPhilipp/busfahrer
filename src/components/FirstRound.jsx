@@ -1,7 +1,7 @@
 import React from "react";
 import { useGameState } from "../context/GameStateProvider";
 import PlayerTurn from "./PlayerTurn";
-import { playStages } from "../utils/helper";
+import { playStages } from "../utils/firstRoundPlayStages";
 function FirstRound() {
   const { playersState, playersTurnIndex, gameRound } = useGameState();
 

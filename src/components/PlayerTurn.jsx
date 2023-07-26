@@ -6,7 +6,6 @@ import {
   useGameState,
   useGameStateDispatch,
 } from "../context/GameStateProvider";
-import { rigthOrWrong } from "../utils/helper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,7 +14,7 @@ function PlayerTurn({ playerName, ui, cards }) {
   const dispatch = useGameStateDispatch();
   const [card, setCard] = useState();
   const [flipCard, setflipCard] = useState(false);
-  const { drawCardFromDeck } = useDeck();
+  const { drawCardFromDeck, firstRoundPlay } = useDeck();
   const [showNext, setShowNext] = useState(false);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ function PlayerTurn({ playerName, ui, cards }) {
 
   function handleClick(type, value, cards, card) {
     if (flipCard) return;
-    if (rigthOrWrong(cards, card, type, value))
+    if (firstRoundPlay(cards, card, type, value))
       toast.success(`${playerName} richtig.`, {
         position: "top-center",
         autoClose: 10000,
@@ -83,7 +82,7 @@ function PlayerTurn({ playerName, ui, cards }) {
         <p>{ui.info}</p>
       </div>
 
-      <div className="h-[148px] my-5 flex justify-center gap-2">
+      <div className="h-[138px] my-5 flex justify-center gap-2">
         {cards.map((card) => (
           <Card key={card.src} src={card.src} isFlipped />
         ))}

@@ -25,9 +25,9 @@ function SecondRound() {
       if (matchedCards > 0) {
         if (type === "drink") {
           toast.error(
-            `${player.name} ${value * matchedCards} ${
+            `${player.name} trink ${value * matchedCards} ${
               value > 1 ? `schlücke` : `schluck`
-            } trinken.`,
+            }!`,
             {
               position: "top-center",
               autoClose: 10000,
@@ -42,9 +42,9 @@ function SecondRound() {
         }
         if (type === "handOut") {
           toast.success(
-            `${player.name} ${value * matchedCards} ${
+            `${player.name} verteil ${value * matchedCards} ${
               value > 1 ? `schlücke` : `schluck`
-            } verteilen.`,
+            }!`,
             {
               position: "top-center",
               autoClose: 10000,

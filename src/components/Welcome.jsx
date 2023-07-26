@@ -16,10 +16,10 @@ function Welcome() {
 
   function handlePlayerSubmit(event) {
     event.preventDefault();
-    if (playerName === "") return; // TODO: Error message
-    //TODO: Add remove player
+    if (playerName === "") return;
     if (players.length === 0) {
       // set the first player as activeplayer true
+
       setPlayers((prev) => [
         ...prev,
         { name: playerName, cards: [], activePlayer: true },
@@ -45,7 +45,6 @@ function Welcome() {
   return (
     <div className="flex flex-col py-10 space-y-10 ">
       <Logo />
-      {/* <img src="/busdriver.png" alt="logo" className="h-[264px]" /> */}
       <h1 className="text-6xl font-extrabold text-center text-transparent animate-pulse bg-clip-text bg-gradient-to-r from-sky-500 via-cyan-200 to-green-500">
         Busfahrer
       </h1>
