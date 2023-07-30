@@ -31,7 +31,12 @@ export function playersReducer(state, { type, payload }) {
         ...state,
         players: state.players.map((player) =>
           player.name === payload.name
-            ? { ...player, cards: [...player.cards, payload.card] }
+            ? {
+                ...player,
+                cards: [...player.cards, payload.card].sort(
+                  (a, b) => a.rank - b.rank
+                ),
+              }
             : player
         ),
       };

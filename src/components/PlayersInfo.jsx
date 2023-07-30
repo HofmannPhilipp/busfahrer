@@ -3,10 +3,9 @@ import { CiBeerMugFull } from "react-icons/ci";
 import { FaPlayCircle } from "react-icons/fa";
 import Card from "./Card";
 import { useGameState } from "../context/GameStateProvider";
-import { useDeck } from "../context/DeckProvider";
+import { motion } from "framer-motion";
 function PlayersInfo() {
   const { playersState } = useGameState();
-  const { getCardId } = useDeck();
 
   return (
     <div className="">

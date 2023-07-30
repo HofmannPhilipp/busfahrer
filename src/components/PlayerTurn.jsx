@@ -23,13 +23,12 @@ function PlayerTurn({ playerName, ui, cards }) {
       type: ACTIONS.SET_ACTIVE_PLAYER,
       payload: { name: playerName, active: true },
     });
-    cards.sort((a, b) => a.rank - b.rank);
   }, []);
 
   function handleClick(type, value, cards, card) {
     if (flipCard) return;
     if (firstRoundPlay(cards, card, type, value))
-      toast.success(`${playerName} richtig.`, {
+      toast.success(`${playerName} richtig!`, {
         position: "top-center",
         autoClose: 10000,
         hideProgressBar: false,
@@ -40,7 +39,7 @@ function PlayerTurn({ playerName, ui, cards }) {
         theme: "colored",
       });
     else {
-      toast.error(`${playerName} falsch.`, {
+      toast.error(`${playerName} falsch!`, {
         position: "top-center",
         autoClose: 10000,
         hideProgressBar: false,
